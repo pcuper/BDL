@@ -42,7 +42,7 @@ public class LogMapperTest
 {
 
     MapDriver <LongWritable, Text, Text, LongWritable > mapDriver;
-    MapReduceDriver<LongWritable, Text, Text, LongWritable, Text, LongWritable> mapReduceDriver;
+    MapReduceDriver<LongWritable, Text, Text, LongWritable, Text, Text> mapReduceDriver;
     
     @Before
     public void setUp() throws IOException{
@@ -52,7 +52,7 @@ public class LogMapperTest
     	mapDriver = new  MapDriver <LongWritable, Text, Text, LongWritable>();
     	mapDriver.setMapper(mapper);
     	    	
-    	mapReduceDriver = new MapReduceDriver<LongWritable, Text, Text, LongWritable, Text, LongWritable> ();
+    	mapReduceDriver = new MapReduceDriver<LongWritable, Text, Text, LongWritable, Text, Text> ();
     	
     	mapReduceDriver.setMapper(mapper);
     	mapReduceDriver.setReducer(reducer);
@@ -96,9 +96,12 @@ public class LogMapperTest
     	mapReduceDriver.withInput(new LongWritable(), new Text("ip1 - - [24/Apr/2011:04:18:54 -0400] \"GET /~strabal/grease/photo1/T97-4.jpg HTTP/1.1\" 200 6244 \"-\" \"Mozilla/5.0 (compatible; YandexImages/3.0; +http://yandex.com/bots)\""));
     	mapReduceDriver.withInput(new LongWritable(), new Text("ip5 - - [24/Apr/2011:04:25:20 -0400] \"GET / HTTP/1.1\" 200 12550 \"-\" \"Baiduspider+(+http://www.baidu.com/search/spider.htm)\""));
     
-    	List <Pair <Text, LongWritable>> outputRecords = new ArrayList<Pair<Text, LongWritable>>();
-    	outputRecords.add(new Pair <Text, LongWritable> (new Text("ip1"), new LongWritable(40028+6244)) );
-    	outputRecords.add(new Pair <Text, LongWritable> (new Text("ip5"), new LongWritable(12550)) );
+    	List <Pair <Text, Text>> outputRecords = new ArrayList<Pair<Text, Text>>();
+    	String ip1output = Long.toString((40028+6244)/2)+","+Long.toString(40028+6244);
+    	String ip5output = Long.toString(12550)+","+Long.toString(12550);
+    	
+    	outputRecords.add(new Pair <Text, Text> (new Text("ip1"), new Text( ip1output )));
+    	outputRecords.add(new Pair <Text, Text> (new Text("ip5"), new Text( ip5output )));
     	
     	mapReduceDriver.withAllOutput(outputRecords);
     	
