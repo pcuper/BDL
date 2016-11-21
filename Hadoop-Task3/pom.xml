@@ -7,12 +7,16 @@
   <version>0.0.3-SNAPSHOT</version>
   <repositories>
       <repository>
+          <id>Central</id>
+          <name>Central repositories</name>
+          <url>http://central.maven.org/maven2/</url>
+      </repository>
+      <repository>
           <id>HDP</id>
           <name>HDP Releases</name>
           <url>http://repo.hortonworks.com/content/groups/public</url>
       </repository>
   </repositories>
- 
   <packaging>jar</packaging>
 
   <name>Task3</name>
@@ -42,18 +46,25 @@
     <dependency>
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>
-      <version>3.8.1</version>
+      <version>4.10</version>
       <scope>test</scope>
     </dependency>
     <dependency>
+        <groupId>org.apache.mrunit</groupId>
+        <artifactId>mrunit</artifactId>
+        <version>1.1.0</version>
+        <classifier>hadoop2</classifier> 
+        <scope>test</scope>
+	</dependency>
+    <dependency>
     	<groupId>org.apache.hadoop</groupId>
     	<artifactId>hadoop-mapreduce-client-app</artifactId>
-    	<version>2.7.1.2.4.0.0-169</version>
+    	<version>2.6.0</version>
     </dependency>
     <dependency>
     	<groupId>org.apache.hadoop</groupId>
     	<artifactId>hadoop-common</artifactId>
-    	<version>2.7.1.2.4.0.0-169</version>
+    	<version>2.6.0</version>
     </dependency>
   </dependencies>
 </project>

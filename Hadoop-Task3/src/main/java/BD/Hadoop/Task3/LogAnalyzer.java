@@ -3,6 +3,7 @@ package BD.Hadoop.Task3;
 import org.apache.hadoop.fs.Path;
 
 import java.io.IOException;
+import java.util.List;
 import java.util.StringTokenizer;
 
 import org.apache.hadoop.conf.*;
@@ -23,6 +24,15 @@ import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import java.lang.management.ManagementFactory;
+import java.lang.management.RuntimeMXBean;
+
+
+// To run locally 
+//job.getConfiguration().set("mapreduce.framework.name", "local"); 
+//job.getConfiguration().set("fs.default.name", "file:///");	
+
+
 public class LogAnalyzer 
 {
     public static void main( String[] args ) throws Exception {
@@ -30,14 +40,20 @@ public class LogAnalyzer
             System.err.println("Usage: LogAnalyzer <input path> <output path>");
             System.exit(-1);
         }
-        Job job = Job.getInstance();//deprecated: new Job(); Job.getInstance(getConf()) - doesn't work 
+        Job job = Job.getInstance(); 
+        
+
         job.setJarByClass(LogAnalyzer.class);
         job.setJobName("Log Analyzer");
         FileInputFormat.addInputPath(job, new Path(args[0]));
         FileOutputFormat.setOutputPath(job, new Path(args[1]));
         job.setMapperClass(LogMapper.class);
         job.setCombinerClass(LogReducer.class);
-        //job.setReducerClass(LogReducer.class);
+        
+        job.setMapOutputKeyClass(Text.class);
+        job.setMapOutputValueClass(LongWritable.class);
+        
+        
         job.setOutputKeyClass(Text.class);
         job.setOutputValueClass(Text.class);
         System.exit(job.waitForCompletion(true) ? 0 : 1);
