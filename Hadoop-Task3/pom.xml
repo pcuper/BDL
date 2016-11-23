@@ -4,7 +4,7 @@
 
   <groupId>BD.Hadoop</groupId>
   <artifactId>Task3</artifactId>
-  <version>0.0.3-SNAPSHOT</version>
+  <version>0.0.5-SNAPSHOT</version>
   <repositories>
       <repository>
           <id>Central</id>
