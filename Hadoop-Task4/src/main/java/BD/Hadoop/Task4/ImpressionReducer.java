@@ -42,7 +42,6 @@ public class ImpressionReducer extends Reducer<Text, LongWritable, Text, Text> {
     		__cityMap.put(values[0] , values[1] );
             line=br.readLine();
         }
-	    fs.close();
 		super.setup(context);
 	}
 	

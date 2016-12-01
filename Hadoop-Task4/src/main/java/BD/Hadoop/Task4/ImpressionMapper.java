@@ -11,8 +11,8 @@ import org.mortbay.log.Log;
 
 
 public class ImpressionMapper extends Mapper<LongWritable, Text, Text, LongWritable> {
-	final int COLUMN_CITY = 7;  
-	final int COLUMN_BIDDING_PRICE = 19;
+	final int column_city = 7;  
+	final int column_bidding_price = 19;
 	
 	
     public void map(LongWritable key, Text value, Context context) throws IOException, InterruptedException {
@@ -22,8 +22,8 @@ public class ImpressionMapper extends Mapper<LongWritable, Text, Text, LongWrita
     	
     	// Using data table (http://contest.ipinyou.com/data.shtml) to detect column meaning
     	// See Impression description
-    	Text city = new Text ( columnValues[COLUMN_CITY] );
-    	LongWritable bidding_price = new LongWritable(  Long.parseLong( columnValues[COLUMN_BIDDING_PRICE]));
+    	Text city = new Text ( columnValues[column_city] );
+    	LongWritable bidding_price = new LongWritable(  Long.parseLong( columnValues[column_bidding_price]));
     	context.write( city, bidding_price );
     }
 }

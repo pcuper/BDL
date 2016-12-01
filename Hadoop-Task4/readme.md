@@ -9,4 +9,12 @@ hadoop jar Task4-0.0.1-SNAPSHOT.jar BD.Hadoop.Task4.ImpressionAnalyzer /task4/in
 
 ![Uploaded HDFS Files](./screenshots/1_HDFS_Files.png)
 
+#Execution# (Screenshot 2)
+
+![Execution](./screenshots/2_Execution_part1.png)
+
+![Execution](./screenshots/2_Execution_part1.png)
+
+#Result# (Screenshot 3)
+![Result](./screenshots/3_Result.png)
 

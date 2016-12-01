@@ -34,19 +34,15 @@ import java.lang.management.ManagementFactory;
 import java.lang.management.RuntimeMXBean;
 
 
-public class ImpressionAnalyzer 
-{
-    public static void main( String[] args ) throws Exception {
-    	
-    	String commandFormat = "ImpressionAnalyzer <input path> <output path> <city file path>";
+public class ImpressionAnalyzer {
+  public static void main( String[] args ) throws Exception {
+    String commandFormat = "ImpressionAnalyzer <input path> <output path> <city file path>";
 
-    	if ((args.length != 3) ) {
-            System.err.println("Usage: "+commandFormat);
+    if ((args.length != 3) ) {
+      System.err.println("Usage: "+commandFormat);
             System.exit(-1);
         }
-    	
         Job job = Job.getInstance();
-              
         
         job.setJarByClass(ImpressionAnalyzer.class);
         job.setJobName("Impression Analyzer");
@@ -54,7 +50,6 @@ public class ImpressionAnalyzer
         FileInputFormat.addInputPath(job, new Path(args[0]));
         FileOutputFormat.setOutputPath( job, new Path(args[1]));
         
-        //File cityFile = new File(args[2]);
         Path path = new Path(args[2]);
 	    FileSystem fs = path.getFileSystem(job.getConfiguration());
 	    
@@ -64,9 +59,6 @@ public class ImpressionAnalyzer
         {
         	throw new Exception("File with city name does not exist"); 
         }
-        
-        
-        //job.setInputFormatClass(TextInputFormat.class);
         
         job.getConfiguration().set("impressionanalyzer.city.filepath", args[2]);
         
