@@ -63,11 +63,14 @@ public class ImpressionAnalyzer {
         job.getConfiguration().set("impressionanalyzer.city.filepath", args[2]);
         
         job.setMapperClass(ImpressionMapper.class);
-        job.setMapOutputKeyClass(Text.class);
+        job.setMapOutputKeyClass(ImpressionInformation.class);
         job.setMapOutputValueClass(LongWritable.class);
-                
-        job.setReducerClass(ImpressionReducer.class);
         
+        job.setPartitionerClass(OperationSystemPartitioner.class);
+        
+        //job.setSortComparatorClass(ImpressionInformation.class);
+        
+        job.setReducerClass(ImpressionReducer.class);
         job.setOutputKeyClass(Text.class);
         job.setOutputValueClass(Text.class);
         

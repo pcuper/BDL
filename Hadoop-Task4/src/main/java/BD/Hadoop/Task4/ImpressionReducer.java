@@ -6,6 +6,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.Hashtable;
+import java.util.Iterator;
 
 import org.apache.hadoop.fs.FSDataInputStream;
 import org.apache.hadoop.fs.FileSystem;
@@ -19,12 +20,15 @@ import com.google.common.collect.Iterables;
 import com.google.common.collect.Iterators;
 import com.sun.tools.javac.util.List;
 
-public class ImpressionReducer extends Reducer<Text, LongWritable, Text, Text> {
+import net.sf.uadetector.UserAgent;
+import net.sf.uadetector.UserAgentStringParser;
+
+public class ImpressionReducer extends Reducer<ImpressionInformation, LongWritable, Text, Text> {
 	
-	Hashtable __cityMap = new Hashtable();  
+	Hashtable cityMap = new Hashtable();  
 		
 	@Override
-	protected void setup(Reducer<Text, LongWritable, Text, Text>.Context context)
+	protected void setup(Reducer<ImpressionInformation, LongWritable, Text, Text>.Context context)
 			throws IOException, InterruptedException {
 
 		// Prepare city map
@@ -39,33 +43,43 @@ public class ImpressionReducer extends Reducer<Text, LongWritable, Text, Text> {
         line=br.readLine();
         while (line != null){
     		String [] values = line.split("[ \t]");
-    		__cityMap.put(values[0] , values[1] );
+    		cityMap.put(values[0] , values[1] );
             line=br.readLine();
         }
 		super.setup(context);
 	}
 	
-    public void reduce(Text key, Iterable<LongWritable> values, Context context)
+    public void reduce(ImpressionInformation key, Iterable<LongWritable> values, Context context)
             throws IOException, InterruptedException {
         
     	long num = 0;
     	long sum = 0;
     	
-		for (LongWritable val : values) {
-			num++;
-			sum += val.get();
-        }
+    	Iterator<LongWritable> iter = values.iterator();
+    	while (iter.hasNext()) {
+    		num++;
+			sum += iter.next().get();
+			    		
+    		}
+    	
+    	
+    	
+		//for (LongWritable val : values) {
+//    		num++;
+			//sum += val.get();
+			
+        //}
 		
 		if (num > 250)
 		{
 			Text cityName = new Text( "");
-			if (__cityMap.get(key.toString()) != null)
+			if (cityMap.get(key.toString()) != null)
 			{
-				cityName =  new Text( __cityMap.get(key.toString()).toString() );
+				cityName =  new Text( cityMap.get(key.getCity()).toString() );
 			}
 			else
 			{
-				cityName = new Text(key.toString());
+				cityName = new Text(key.getCity());
 			}
 			
 			Text sumBid = new Text ( Long.toString(sum) );

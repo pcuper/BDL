@@ -40,9 +40,7 @@ import org.apache.hadoop.fs.*;
 
 public class ImpressionAnalyzerTest 
 {
-
-    
-    MapReduceDriver<LongWritable, Text, Text, LongWritable, Text, Text> mapReduceDriver;
+    MapReduceDriver<LongWritable, Text, ImpressionInformation, LongWritable, Text, Text> mapReduceDriver;
     
     @Before
     public void setUp() throws IOException{
@@ -50,9 +48,11 @@ public class ImpressionAnalyzerTest
     	ImpressionReducer reducer = new ImpressionReducer();
 
     	
-    	mapReduceDriver = new MapReduceDriver<LongWritable, Text, Text, LongWritable, Text, Text> ();
+    	mapReduceDriver = new MapReduceDriver<LongWritable, Text, ImpressionInformation, LongWritable, Text, Text> ();
     	mapReduceDriver.setMapper(mapper);
     	mapReduceDriver.setReducer(reducer);
+    	
+    	
 
     	Configuration conf = mapReduceDriver.getConfiguration();
     	conf.set("impressionanalyzer.city.filepath", "./dictionaries/city.en.txt");
