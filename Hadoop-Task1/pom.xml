@@ -4,7 +4,7 @@
 
   <groupId>BD.Hadoop</groupId>
   <artifactId>Task1</artifactId>
-  <version>0.0.4-SNAPSHOT</version>
+  <version>0.0.5-SNAPSHOT</version>
   <repositories>
         <repository>
             <id>HDP</id>
@@ -23,6 +23,7 @@
   </properties>
 
   <dependencies>
+    
     <dependency>
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>
